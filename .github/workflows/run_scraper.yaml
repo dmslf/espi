@@ -1,0 +1,36 @@
+name: Run Dom Scraper Daily
+
+on:
+  schedule:
+    - cron: '0 6 * * 1-5'
+  workflow_dispatch:
+
+permissions:
+  contents: write    # <- KLUCZOWA LINIJKA! daje Actions prawo do pushowania
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run scraper
+        run: python domd-scraper.py
+
+      - name: Commit and push results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add mieszkania_dom_*.csv
+          git commit -m "Add new data file $(date +'%Y-%m-%d')" || echo "No changes"
+          git push

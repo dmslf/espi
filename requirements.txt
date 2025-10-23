@@ -1,0 +1,4 @@
+requests
+BeautifulSoup
+csv
+date, timedelta
