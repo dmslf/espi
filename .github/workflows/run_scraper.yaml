@@ -25,12 +25,12 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Run scraper
-        run: python domd-scraper.py
+        run: python pobieranie ESPI.py
 
       - name: Commit and push results
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add mieszkania_dom_*.csv
+          git add espi_*.csv
           git commit -m "Add new data file $(date +'%Y-%m-%d')" || echo "No changes"
           git push
