@@ -1,4 +1,4 @@
-name: Run Dom Scraper Daily
+name: Run ESPI Scraper Daily
 
 on:
   schedule:
